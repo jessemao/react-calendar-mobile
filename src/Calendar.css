@@ -96,3 +96,7 @@
 	border-radius: 50%;
 	background: #eb4f04;
 }
+
+.react-calendar__day--selected.react-calendar__day--decorate:after {
+  background: #fff;
+}

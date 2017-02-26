@@ -1,0 +1,15 @@
+.calendar__value {
+  padding: 10px 20px;
+}
+
+.calendar__value .title {
+  font-size: 14px;
+}
+
+.calendar__value .value {
+  color: #eb4f04;
+}
+
+.react-calendar {
+  margin-bottom: 10px;
+}

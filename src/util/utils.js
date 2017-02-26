@@ -1,4 +1,4 @@
-export const GetWeek = (date, dowOffset = 0) => {
+export const GetWeek = function(date, dowOffset = 0) {
   var newYear = new Date(date.getFullYear(), 0, 1);
   var day = newYear.getDay() - dowOffset; //the day of week the year begins on
   day = (day >= 0 ? day : day + 7);

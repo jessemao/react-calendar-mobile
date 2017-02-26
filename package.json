@@ -1,18 +1,58 @@
 {
-  "name": "react-calendar-mobile",
-  "version": "0.1.0",
-  "devDependencies": {
-    "react-scripts": "0.9.0"
-  },
-  "dependencies": {
-    "classnames": "^2.2.5",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
+	"name": "react-calendar-mobile",
+	"version": "0.1.0",
+	"description": "A calendar component for mobile device",
+	"main": "lib/react-calendar-mobile.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jessemao/react-calendar-mobile"
+	},
+	"devDependencies": {
+		"autoprefixer-loader": "^3.2.0",
+		"babel-core": "^6.23.1",
+		"babel-eslint": "^7.1.1",
+		"babel-loader": "^6.3.2",
+		"babel-plugin-react-transform": "^2.0.2",
+		"babel-preset-es2015": "^6.22.0",
+		"babel-preset-react": "^6.23.0",
+		"babel-preset-stage-0": "^6.22.0",
+		"css-loader": "^0.26.1",
+		"eslint": "^3.16.1",
+		"eslint-plugin-babel": "^4.0.1",
+		"eslint-plugin-react": "^6.10.0",
+		"react-transform-catch-errors": "^1.0.2",
+		"react-transform-hmr": "^1.0.4",
+		"redbox-react": "^1.3.4",
+		"rimraf": "^2.6.0",
+		"style-loader": "^0.13.1",
+		"webpack": "^2.2.1"
+	},
+	"dependencies": {
+		"classnames": "^2.2.5",
+		"react": "^15.4.2",
+		"react-dom": "^15.4.2"
+	},
+	"keywords": [
+		"react",
+		"react calendar",
+		"react calendar mobile",
+		"mobile calendar",
+		"calendar",
+		"touchable",
+		"scrollable",
+		"react-component",
+		"react components",
+		"react ui",
+		"mobile ui"
+	],
+	"scripts": {
+		"clean": "rimraf lib",
+		"lint": "eslint src",
+		"build": "npm run clean && npm run lint && set NODE_ENV=production && webpack --progress --hide-modules --config webpack.build.js"
+	},
+	"author": {
+		"name": "Jingxian Mao",
+		"email": "jessemao@gmail.com"
+	},
+	"license": "MIT"
 }

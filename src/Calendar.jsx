@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import { WEEKDAYS, MONTHS, ITEM_HEIGHT } from '../util/constant';
-import draggable from '../util/draggable';
-import translateUtil from '../util/translate';
-import { GetWeek } from '../util/utils';
+import { WEEKDAYS, MONTHS, ITEM_HEIGHT } from './util/constant';
+import draggable from './util/draggable';
+import translateUtil from './util/translate';
+import { GetWeek } from './util/utils';
 import './Calendar.css';
 
 
@@ -31,6 +31,8 @@ class Calendar extends Component {
   componentDidMount() {
     this.translateToStart();
     this.initScrollEvent();
+    this.props.onSelectDate(this.state.selectedAt);
+    this.props.onChange(this.state.startDateAt);
   }
   componentDidUpdate() {
     this.translateToStart();
@@ -38,7 +40,7 @@ class Calendar extends Component {
   translateToStart() {
     if (this.state.shouldTranslate) {
       const {startDateAt} = this.state;
-      const wrapper = document.querySelectorAll('.react-calendar__scroll-wrapper')[0];
+      const wrapper = this.wrapper;
       translateUtil.translateElement(wrapper, null, this.valueToTranslate(startDateAt));
       this.setState({
         shouldTranslate: false
@@ -122,7 +124,7 @@ class Calendar extends Component {
     return scrollableData.indexOf(formatedValue);
   }
   initScrollEvent() {
-    const el = document.querySelectorAll('.react-calendar__scroll-wrapper')[0];
+    const el = this.wrapper;
     var dragState = {};
     draggable(el, {
       start: (event) => {
@@ -184,10 +186,7 @@ class Calendar extends Component {
     return day.getMonth() !== start.getMonth();
   }
   isDecorated(day) {
-    const dateFormat = `
-      ${day.getFullYear()}-
-      ${`0${(day.getMonth() + 1)}`.slice(-2)}-
-      ${`0${(day.getDate())}`.slice(-2)}`;
+    const dateFormat = `${day.getFullYear()}-${`0${(day.getMonth() + 1)}`.slice(-2)}-${`0${(day.getDate())}`.slice(-2)}`;
     return !!this.props.decorate[dateFormat];
   }
   onSelectDay = (e) => {
@@ -356,7 +355,7 @@ class Calendar extends Component {
           <div className="react-calendar__weekdays">
             { this.renderWeekTitle() }
           </div>
-          <div className={ daysWrapClass } style={ { height: `${contentHeight}px` } }>
+          <div ref={ (wrapper) => this.wrapper = wrapper } className={ daysWrapClass } style={ { height: `${contentHeight}px` } }>
             { this.renderScrollableWrap() }
           </div>
         </div>
@@ -369,7 +368,9 @@ Calendar.propTypes = {
   view: PropTypes.string,
   startOnMonday: PropTypes.bool,
   startDateAt: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
+  selectedDate: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
   decorate: PropTypes.object,
+  className: PropTypes.string,
   onSelectDate: PropTypes.func,
   onChange: PropTypes.func,
 };
@@ -379,11 +380,9 @@ Calendar.defaultProps = {
   startDateAt: new Date(),
   decorate: {},
   onSelectDate: (value) => {
-    console.log('selected', value)
   },
-  view: 'week',
+  view: 'month',
   onChange: (value) => {
-    console.log('changed', value);
   },
 }
 
