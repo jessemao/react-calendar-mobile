@@ -51,7 +51,11 @@ class Calendar extends Component {
   }
   getFormatedWeek(current, number = 0) {
     const dateValue = new Date(current.getFullYear(), current.getMonth(), current.getDate() + 7 * number);
-    return `${dateValue.getFullYear()}-${GetWeek(dateValue)}`;
+    var dowOffset = 0;
+    if (this.props.startOnMonday) {
+      dowOffset = 1;
+    }
+    return `${dateValue.getFullYear()}-${GetWeek(dateValue, dowOffset)}`;
   }
   getDefaultScrollableData(view, current) {
     if (view === 'month') {
@@ -214,6 +218,9 @@ class Calendar extends Component {
     } else {
       deltaNumber = 1;
     }
+    if (this.props.startOnMonday) {
+      deltaNumber++;
+    }
     return new Date(splitWeek[0], 0, ((parseInt(splitWeek[1], 10) - 1) * 7 + deltaNumber));
   }
   updateCalendarDate(currentValue) {
@@ -290,9 +297,9 @@ class Calendar extends Component {
       );
   }
   renderWeekTitle() {
-    const weekdays = WEEKDAYS;
+    const weekdays = WEEKDAYS.slice(0);
     if (this.props.startOnMonday) {
-      const sunday = WEEKDAYS.shift();
+      const sunday = weekdays.shift();
       weekdays.push(sunday);
     }
     return weekdays.map((w, i) => (<span key={ i } className="react-calendar__weekday">{ w[0].toUpperCase() }</span>))
@@ -374,7 +381,7 @@ Calendar.defaultProps = {
   onSelectDate: (value) => {
     console.log('selected', value)
   },
-  view: 'month',
+  view: 'week',
   onChange: (value) => {
     console.log('changed', value);
   },
