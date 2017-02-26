@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Calendar from '../../lib/react-calendar-mobile';
+import Calendar from 'react-calendar-mobile';
 import './App.css';
 
 class App extends Component {
@@ -33,8 +33,9 @@ class App extends Component {
     })
   }
   formatDate(date) {
-    date = new Date(date);
-    return `${date.getFullYear()}-${`0${(date.getMonth() + 1)}`.slice(-2)}-${`0${(date.getDate())}`.slice(-2)}`;
+    if (typeof date === 'object') {
+      return `${date.getFullYear()}-${`0${(date.getMonth() + 1)}`.slice(-2)}-${`0${(date.getDate())}`.slice(-2)}`;
+    }
   }
   setDecorate() {
     const today = new Date();
