@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import { WEEKDAYS, MONTHS, ITEM_HEIGHT } from './util/constant';
+import { WEEKDAYS, MONTHS, ITEM_HEIGHT, WEEKDAYS_HEIGHT } from './util/constant';
 import draggable from './util/draggable';
 import translateUtil from './util/translate';
 import { GetWeek } from './util/utils';
@@ -33,6 +33,12 @@ class Calendar extends Component {
     this.initScrollEvent();
     this.props.onSelectDate(this.state.selectedAt);
     this.props.onChange(this.state.startDateAt);
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!nextState.shouldTranslate && this.state.shouldTranslate) {
+      return false;
+    }
+    return true;
   }
   componentDidUpdate() {
     this.translateToStart();
@@ -333,7 +339,7 @@ class Calendar extends Component {
         'react-calendar__day--decorate': this.isDecorated(day),
       });
       return (
-        <div key={ i } data-value={ day } className={ className } onClick={ this.onSelectDay }>
+        <div key={ i } data-value={ day } className={ className }>
           <span data-value={ day }>{ day.getDate() }</span>
         </div>
         );
@@ -341,17 +347,22 @@ class Calendar extends Component {
   }
   render() {
     const {className, view} = this.props;
+    const {scrollableData} = this.state;
     const wrapClass = classnames("react-calendar", className);
     const daysWrapClass = classnames("react-calendar__scroll-wrapper", {
       dragging: this.state.dragging
     });
-    const contentHeight = ITEM_HEIGHT[view];
+    const contentHeight = ITEM_HEIGHT[view] * scrollableData.length;
+    var mainDivHeight = WEEKDAYS_HEIGHT;
+    if (this.main) {
+      mainDivHeight = this.main.height;
+    }
     return (
       <div className={ wrapClass }>
         <div className="react-calendar__header">
           { this.renderHeader() }
         </div>
-        <div className="react-calendar__main">
+        <div ref={ (main) => this.main = main } className="react-calendar__main" style={ { height: `${ITEM_HEIGHT[view] + mainDivHeight}px` } }>
           <div className="react-calendar__weekdays">
             { this.renderWeekTitle() }
           </div>
