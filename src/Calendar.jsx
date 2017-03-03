@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import { WEEKDAYS, MONTHS, ITEM_HEIGHT, WEEKDAYS_HEIGHT } from './util/constant';
+import { ITEM_HEIGHT, WEEKDAYS_HEIGHT } from './util/constant';
+import { getWeekNumber, getWeekLocale, getMonthLocale, getYearLocale } from './util/utils';
 import draggable from './util/draggable';
 import translateUtil from './util/translate';
-import { GetWeek } from './util/utils';
 import './Calendar.css';
 
 
@@ -19,8 +19,6 @@ class Calendar extends Component {
       startDate = current;
     }
     this.state = {
-      year: current.getFullYear(),
-      month: current.getMonth(),
       selectedAt: current,
       dragging: false,
       startDateAt: startDate,
@@ -63,7 +61,7 @@ class Calendar extends Component {
     if (this.props.startOnMonday) {
       dowOffset = 1;
     }
-    return `${dateValue.getFullYear()}-${GetWeek(dateValue, dowOffset)}`;
+    return `${dateValue.getFullYear()}-${getWeekNumber(dateValue, dowOffset)}`;
   }
   getDefaultScrollableData(view, current) {
     if (view === 'month') {
@@ -268,8 +266,6 @@ class Calendar extends Component {
     this.setState({
       startDateAt: currentDate,
       scrollableData: scrollableData,
-      year: currentDate.getFullYear(),
-      month: currentDate.getMonth(),
       dragging: false,
       shouldTranslate: true
     })
@@ -293,21 +289,24 @@ class Calendar extends Component {
   }
 
   renderHeader() {
-    const month = MONTHS[this.state.month];
+    const {i18n, monthFormat, yearFormat} = this.props;
+    const month = getMonthLocale(this.state.startDateAt, i18n, monthFormat);
+    const year = getYearLocale(this.state.startDateAt, i18n, yearFormat)
     return (
       <div className="react-calendar__title">
-        <span className="react-calendar__year">{ this.state.year }</span>
+        <span className="react-calendar__year">{ year }</span>
         <span className="react-calendar__month">{ month }</span>
       </div>
       );
   }
   renderWeekTitle() {
-    const weekdays = WEEKDAYS.slice(0);
+    const {i18n, weekdayFormat} = this.props;
+    const weekdays = getWeekLocale(i18n, weekdayFormat);
     if (this.props.startOnMonday) {
       const sunday = weekdays.shift();
       weekdays.push(sunday);
     }
-    return weekdays.map((w, i) => (<span key={ i } className="react-calendar__weekday">{ w[0].toUpperCase() }</span>))
+    return weekdays.map((w, i) => (<span key={ i } className="react-calendar__weekday">{ w }</span>))
   }
   renderScrollableWrap() {
     const {scrollableData} = this.state;
@@ -382,6 +381,10 @@ Calendar.propTypes = {
   selectedDate: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
   decorate: PropTypes.object,
   className: PropTypes.string,
+  i18n: PropTypes.string,
+  weekdayFormat: PropTypes.string,
+  monthFormat: PropTypes.string,
+  yearFormat: PropTypes.string,
   onSelectDate: PropTypes.func,
   onChange: PropTypes.func,
 };
@@ -393,6 +396,10 @@ Calendar.defaultProps = {
   onSelectDate: (value) => {
   },
   view: 'month',
+  i18n: 'en-US',
+  weekdayFormat: 'narrow',
+  monthFormat: 'long',
+  yearFormat: 'numeric',
   onChange: (value) => {
   },
 }

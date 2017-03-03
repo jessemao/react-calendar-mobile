@@ -1,5 +1,5 @@
 # React Calendar Mobile
-React Calendar Mobile is a component very easy to use with no extra effort. It can be used in any project with great performance! Different from other calendar/date picker components, this component uses **touches** and **scrolls** to move to different months or weeks like native calendar on mobile device. Besides, it supports both **monthly** and **weekly** view.
+React Calendar Mobile is a component very easy to use with no extra effort. It can be used in any project with great performance! Different from other calendar/date picker components, this component uses **touches** and **scrolls** to move to different months or weeks like native calendar on mobile device. It supports both **monthly** and **weekly** view.
 
 # How to install
 ```
@@ -17,6 +17,9 @@ import Calendar from 'react-calendar-mobile';
 var Calendar = require('react-calendar-mobile');
 ```
 
+# Locale / International
+React Calendar Component supports **locale** format as [**Javascript Date API**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) provides. Users can pass value to *i18n*, *weekdayFormat*, *monthFormat*, *yearFormat* to localize the calendar. More details displays in the **Properties** table.
+
 # Properties
 
 | Name          | Type        | Default    | Description                                                                                                                                                                                                                                                                                                 |
@@ -27,6 +30,10 @@ var Calendar = require('react-calendar-mobile');
 | decorate      | object      | {}         | It indicates if there is any event on specific day. A key/value object that maps decorates to calendar. Key format is "YYYY-MM-DD", value can be any value, e.g. {"2017-02-15": true} will add an origin dot under the date of 2017-02-15 on calendar which indicates that there is/are events on that day. |
 | view          | String      | "month"    | Value will be `"month"/"week"`. If set to "month", then a monthly calendar will be displayed, otherwise, it displays a week.                                                                                                                                                                                |
 | className     | String      | ""         | Customized class for the Calendar.                                                                                                                                                                                                                                                                          |
+| i18n          | String      | "en-US"    | Optional. A string with a [**BCP 47**](https://tools.ietf.org/rfc/bcp/bcp47.txt) language tag, or an array of such strings.                                                                                                                                                                               |
+| weekdayFormat | String      | "narrow"   | The representation of the weekday. Possible values are `"narrow", "short", "long"`.                                                                                                                                                                                                                            |
+| monthFormat   | String      | "long"     | The representation of the month. Possible values are `"numeric", "2-digit", "narrow", "short", "long"`.                                                                                                                                                                                                |
+| yearFormat    | String      | "numeric"  | The representation of the year. Possible values are `"numeric", "2-digit"`.                                                                                                                                                                                                                                    |
 | onSelectDate  | Function    |            | Callback function when a date is selected. Output is a `Date` object and value is the selected date                                                                                                                                                                                                         |
 | onChange      | Function    |            | Callback function when calendar scrolls to a different month or week. Output is a `Date` object and value is the start date of the month or week displaying.                                                                                                                                                |
 

@@ -59,7 +59,7 @@ class App extends Component {
           <span className="title">Current Month Start: </span>
           <span className="value">{ this.formatDate(this.state.month) }</span>
         </div>
-        <Calendar decorate={ this.setDecorate() } view='week' onSelectDate={ (v) => this.onSelect2(v) } onChange={ (v) => this.onChange2(v) }></Calendar>
+        <Calendar i18n="zh-cn" weekFormat="short" decorate={ this.setDecorate() } view='week' onSelectDate={ (v) => this.onSelect2(v) } onChange={ (v) => this.onChange2(v) }></Calendar>
         <div className="calendar__value">
           <span className="title">Selected Date: </span>
           <span className="value">{ this.formatDate(this.state.date2) }</span>
