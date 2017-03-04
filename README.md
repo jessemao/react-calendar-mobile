@@ -1,6 +1,8 @@
 # React Calendar Mobile
 React Calendar Mobile is a component very easy to use with no extra effort. It can be used in any project with great performance! Different from other calendar/date picker components, this component uses **touches** and **scrolls** to move to different months or weeks like native calendar on mobile device. It supports both **monthly** and **weekly** view.
 
+点此阅读[简体中文]文档(https://github.com/jessemao/react-calendar-mobile/blob/master/README.zh-cn.md)
+
 # How to install
 ```
 npm install react-calendar-mobile --save
@@ -34,8 +36,8 @@ React Calendar Component supports **locale** format as [**Javascript Date API**]
 | weekdayFormat | String      | "narrow"   | The representation of the weekday. Possible values are `"narrow", "short", "long"`.                                                                                                                                                                                                                            |
 | monthFormat   | String      | "long"     | The representation of the month. Possible values are `"numeric", "2-digit", "narrow", "short", "long"`.                                                                                                                                                                                                |
 | yearFormat    | String      | "numeric"  | The representation of the year. Possible values are `"numeric", "2-digit"`.                                                                                                                                                                                                                                    |
-| onSelectDate  | Function    |            | Callback function when a date is selected. Output is a `Date` object and value is the selected date                                                                                                                                                                                                         |
-| onChange      | Function    |            | Callback function when calendar scrolls to a different month or week. Output is a `Date` object and value is the start date of the month or week displaying.                                                                                                                                                |
+| onSelectDate  | Function    |            | Callback function when a date is selected. Output of the selected value is a `Date` object and is passed in as the **first** argument of this function.                                                                                                                                                                                                         |
+| onChange      | Function    |            | Callback function when calendar scrolls to a different month or week. Output is a `Date` object and value is the start date of the month or week displaying. Passed in as the **first** argument of this function.                                                                                                                                             |
 
 
 # Style
