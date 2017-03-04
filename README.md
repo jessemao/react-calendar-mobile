@@ -1,7 +1,7 @@
 # React Calendar Mobile
 React Calendar Mobile is a component very easy to use with no extra effort. It can be used in any project with great performance! Different from other calendar/date picker components, this component uses **touches** and **scrolls** to move to different months or weeks like native calendar on mobile device. It supports both **monthly** and **weekly** view.
 
-点此阅读[简体中文]文档(https://github.com/jessemao/react-calendar-mobile/blob/master/README.zh-cn.md)
+点此阅读[简体中文](https://github.com/jessemao/react-calendar-mobile/blob/master/README.zh-cn.md)文档
 
 # How to install
 ```
