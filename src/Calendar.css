@@ -10,6 +10,46 @@
 	padding: 25px 0;
 }
 
+.react-calendar__control {
+	margin: 0 auto;
+	width: 240px;
+	padding: 0;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-pack: distribute;
+	justify-content: space-around;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	color: #1e2329;
+}
+
+.react-calendar__arrow {
+	width: 44px;
+	text-align: center;
+}
+
+.react-calendar__arrow--right:after {
+	display: inline-block;
+	content: '';
+	width: 0;
+	height: 0;
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-left: 5px solid #c7d2d0;
+}
+
+.react-calendar__arrow--left:after {
+	display: inline-block;
+	content: '';
+	width: 0;
+	height: 0;
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-right: 5px solid #c7d2d0;
+}
+
 .react-calendar__title {
   display: flex;
   align-items: center;

@@ -13,6 +13,8 @@ class Calendar extends Component {
     const current = new Date(props.selectedDate);
     const startDateProps = new Date(props.startDateAt);
     var startDate;
+    this.changeToNextMonth = this.changeToNextMonth.bind(this);
+    this.changeToPrevMonth = this.changeToPrevMonth.bind(this);
     if (props.view === 'month') {
       startDate = new Date(startDateProps.getFullYear(), startDateProps.getMonth());
     } else {
@@ -22,7 +24,7 @@ class Calendar extends Component {
       selectedAt: current,
       dragging: false,
       startDateAt: startDate,
-      scrollableData: this.getDefaultScrollableData(props.view, current),
+      scrollableData: this.getDefaultScrollableData(props.view, startDate),
       shouldTranslate: true
     };
   }
@@ -287,15 +289,29 @@ class Calendar extends Component {
     var index = -translate / itemHeight;
     return scrollableData[index];
   }
+  changeToPrevMonth() {
+    var {startDateAt} = this.state;
+    var prevMonth = new Date(startDateAt.getFullYear(), startDateAt.getMonth() - 1, startDateAt.getDate());
+    this.updateCalendarDate(prevMonth);
+  }
+  changeToNextMonth() {
+    var {startDateAt} = this.state;
+    var nextMonth = new Date(startDateAt.getFullYear(), startDateAt.getMonth() + 1, startDateAt.getDate());
+    this.updateCalendarDate(nextMonth);
 
+  }
   renderHeader() {
     const {i18n, monthFormat, yearFormat} = this.props;
     const month = getMonthLocale(this.state.startDateAt, i18n, monthFormat);
     const year = getYearLocale(this.state.startDateAt, i18n, yearFormat)
     return (
-      <div className="react-calendar__title">
-        <span className="react-calendar__year">{ year }</span>
-        <span className="react-calendar__month">{ month }</span>
+      <div className="react-calendar__control">
+        <div className="react-calendar__arrow react-calendar__arrow--left" onClick={ this.changeToPrevMonth }></div>
+        <div className="react-calendar__title">
+          <span className="react-calendar__year">{ year }</span>
+          <span className="react-calendar__month">{ month }</span>
+        </div>
+        <div className="react-calendar__arrow react-calendar__arrow--right" onClick={ this.changeToNextMonth }></div>
       </div>
       );
   }

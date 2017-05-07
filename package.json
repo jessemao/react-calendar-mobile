@@ -1,6 +1,6 @@
 {
 	"name": "react-calendar-mobile",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"description": "A calendar component for mobile device",
 	"main": "lib/react-calendar-mobile.js",
 	"repository": {

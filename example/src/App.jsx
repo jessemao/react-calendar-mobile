@@ -48,9 +48,11 @@ class App extends Component {
     }
   }
   render() {
+    var today = new Date();
+    var nextMonth = new Date(today.getFullYear(), today.getMonth() + 2, today.getDate());
     return (
       <div className="row">
-        <Calendar decorate={ this.setDecorate() } onSelectDate={ (v) => this.onSelect1(v) } onChange={ (v) => this.onChange1(v) }></Calendar>
+        <Calendar startDateAt={ nextMonth } decorate={ this.setDecorate() } onSelectDate={ (v) => this.onSelect1(v) } onChange={ (v) => this.onChange1(v) }></Calendar>
         <div className="calendar__value">
           <span className="title">Selected Date: </span>
           <span className="value">{ this.formatDate(this.state.date1) }</span>
