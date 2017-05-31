@@ -13,8 +13,8 @@ class Calendar extends Component {
     const current = new Date(props.selectedDate);
     const startDateProps = new Date(props.startDateAt);
     var startDate;
-    this.changeToNextMonth = this.changeToNextMonth.bind(this);
-    this.changeToPrevMonth = this.changeToPrevMonth.bind(this);
+    this.changeToNextMonthOrWeek = this.changeToNextMonthOrWeek.bind(this);
+    this.changeToPrevMonthOrWeek = this.changeToPrevMonthOrWeek.bind(this);
     if (props.view === 'month') {
       startDate = new Date(startDateProps.getFullYear(), startDateProps.getMonth());
     } else {
@@ -246,7 +246,6 @@ class Calendar extends Component {
       }
     }
     const scrollableLength = scrollableData.length - 1;
-
     if (valueIndex < 2) {
       for (let index = 2 - valueIndex; index > 0; index--) {
         if (view === 'month') {
@@ -289,15 +288,27 @@ class Calendar extends Component {
     var index = -translate / itemHeight;
     return scrollableData[index];
   }
-  changeToPrevMonth() {
+  changeToPrevMonthOrWeek() {
     var {startDateAt} = this.state;
-    var prevMonth = new Date(startDateAt.getFullYear(), startDateAt.getMonth() - 1, startDateAt.getDate());
-    this.updateCalendarDate(prevMonth);
+    var {view} = this.props;
+    var prevDate;
+    if (view === 'month') {
+      prevDate = new Date(startDateAt.getFullYear(), startDateAt.getMonth() - 1);
+    } else {
+      prevDate = new Date(startDateAt.getFullYear(), startDateAt.getMonth(), startDateAt.getDate() - 7);
+    }
+    this.updateCalendarDate(prevDate);
   }
-  changeToNextMonth() {
+  changeToNextMonthOrWeek() {
     var {startDateAt} = this.state;
-    var nextMonth = new Date(startDateAt.getFullYear(), startDateAt.getMonth() + 1, startDateAt.getDate());
-    this.updateCalendarDate(nextMonth);
+    var {view} = this.props;
+    var nextDate;
+    if (view === 'month') {
+      nextDate = new Date(startDateAt.getFullYear(), startDateAt.getMonth() + 1);
+    } else {
+      nextDate = new Date(startDateAt.getFullYear(), startDateAt.getMonth(), startDateAt.getDate() + 7);
+    }
+    this.updateCalendarDate(nextDate);
 
   }
   renderHeader() {
@@ -306,12 +317,12 @@ class Calendar extends Component {
     const year = getYearLocale(this.state.startDateAt, i18n, yearFormat)
     return (
       <div className="react-calendar__control">
-        <div className="react-calendar__arrow react-calendar__arrow--left" onClick={ this.changeToPrevMonth }></div>
+        <div className="react-calendar__arrow react-calendar__arrow--left" onClick={ this.changeToPrevMonthOrWeek }></div>
         <div className="react-calendar__title">
           <span className="react-calendar__year">{ year }</span>
           <span className="react-calendar__month">{ month }</span>
         </div>
-        <div className="react-calendar__arrow react-calendar__arrow--right" onClick={ this.changeToNextMonth }></div>
+        <div className="react-calendar__arrow react-calendar__arrow--right" onClick={ this.changeToNextMonthOrWeek }></div>
       </div>
       );
   }
