@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { ITEM_HEIGHT, WEEKDAYS_HEIGHT } from './util/constant';
-import { getWeekNumber, getWeekLocale, getMonthLocale, getYearLocale } from './util/utils';
+import { getWeekNumber, getWeekLocale, getMonthLocale, getYearLocale, getDaysCountOfMonth } from './util/utils';
 import draggable from './util/draggable';
 import translateUtil from './util/translate';
 import './Calendar.css';
@@ -82,7 +82,7 @@ class Calendar extends Component {
       leftPadding;
     let startDateAt = new Date(startDate);
     if (view === 'month') {
-      daysLenth = 35;
+      daysLenth = 42;
       startDateAt = new Date(startDateAt.getFullYear(), startDateAt.getMonth());
     } else {
       daysLenth = 7;
@@ -134,6 +134,7 @@ class Calendar extends Component {
     var dragState = {};
     draggable(el, {
       start: (event) => {
+        this.hideOnSlide();
         dragState = {
           range: this.calcDragRange(),
           start: new Date(),
@@ -155,6 +156,7 @@ class Calendar extends Component {
         translateUtil.translateElement(el, null, translate);
       },
       end: (touches) => {
+        this.removeHideClass();
         if (this.state.dragging) {
           var currentTranslate = translateUtil.getElementTranslate(el).top;
           var dragRange = dragState.range;
@@ -186,10 +188,51 @@ class Calendar extends Component {
     day.getFullYear() === selectedAt.getFullYear() && day.getMonth() === selectedAt.getMonth() && day.getDate() === selectedAt.getDate()
     );
   }
-  isOtherMonth(day) {
+  isPrevMonth(day) {
     const {startDateAt} = this.state;
     const start = new Date(startDateAt);
-    return day.getMonth() !== start.getMonth();
+    return (day.getFullYear() === start.getFullYear() && day.getMonth() < start.getMonth()) || day.getFullYear() < start.getFullYear();
+  }
+  isNextMonth(day) {
+    const {startDateAt} = this.state;
+    const start = new Date(startDateAt);
+    return (day.getFullYear() === start.getFullYear() && day.getMonth() > start.getMonth()) || day.getFullYear() > start.getFullYear();
+  }
+  isCurrentMonth(day) {
+    const {startDateAt} = this.state;
+    const start = new Date(startDateAt);
+    return day.getMonth() === start.getMonth() && day.getFullYear() === start.getFullYear();
+  }
+  hideOnSlide() {
+    this.hideOtherMonthDate('.react-calendar__day--currentmonth');
+    this.hideOtherMonthDate('.react-calendar__day--nextmonth');
+  }
+  hideOtherMonthDate(selector) {
+    const startDateElmOnPrevMonth = document.querySelector(selector);
+    let currentCount = 0;
+    if (startDateElmOnPrevMonth) {
+      let nextSibling = startDateElmOnPrevMonth;
+      while (nextSibling) {
+        nextSibling.classList.add('react-calendar__day--hide');
+        nextSibling = nextSibling.nextSibling;
+        currentCount++;
+      }
+    }
+    const nextStartElmOnCurrentMonth = document.querySelectorAll(selector)[currentCount];
+    if (nextStartElmOnCurrentMonth) {
+      let previousSibling = nextStartElmOnCurrentMonth;
+      while (previousSibling.previousSibling) {
+        previousSibling = previousSibling.previousSibling;
+        previousSibling.classList.add('react-calendar__day--hide');
+      }
+    }
+  }
+  removeHideClass() {
+    const allHideDOM = document.querySelectorAll('.react-calendar__day--hide');
+    for (var index = 0; index < allHideDOM.length; index++) {
+      var element = allHideDOM[index];
+      element.classList.remove('react-calendar__day--hide');
+    }
   }
   isDecorated(day) {
     const dateFormat = `${day.getFullYear()}-${`0${(day.getMonth() + 1)}`.slice(-2)}-${`0${(day.getDate())}`.slice(-2)}`;
@@ -357,11 +400,13 @@ class Calendar extends Component {
   }
   renderDays(startedDateAt) {
     const days = this.getDays(startedDateAt);
-    return days.map((day, i) => {
+    const daysElm = days.map((day, i) => {
       let className = classnames('react-calendar__day', {
         'react-calendar__day--today': this.isToday(day),
         'react-calendar__day--selected': this.isSelected(day),
-        'react-calendar__day--othermonth': this.isOtherMonth(day),
+        'react-calendar__day--nextmonth': this.isNextMonth(day),
+        'react-calendar__day--prevmonth': this.isPrevMonth(day),
+        'react-calendar__day--currentmonth': this.isCurrentMonth(day),
         'react-calendar__day--decorate': this.isDecorated(day),
       });
       return (
@@ -370,12 +415,13 @@ class Calendar extends Component {
         </div>
         );
     });
+    return daysElm;
   }
   render() {
     const {className, view} = this.props;
     const {scrollableData} = this.state;
-    const wrapClass = classnames("react-calendar", className);
-    const daysWrapClass = classnames("react-calendar__scroll-wrapper", {
+    const wrapClass = classnames('react-calendar', className);
+    const daysWrapClass = classnames('react-calendar__scroll-wrapper', {
       dragging: this.state.dragging
     });
     const contentHeight = ITEM_HEIGHT[view] * scrollableData.length;

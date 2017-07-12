@@ -1,6 +1,6 @@
 {
 	"name": "react-calendar-mobile",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"description": "A calendar component for mobile device",
 	"main": "lib/react-calendar-mobile.js",
 	"repository": {
@@ -11,26 +11,26 @@
 		"autoprefixer-loader": "^3.2.0",
 		"babel-core": "^6.23.1",
 		"babel-eslint": "^7.1.1",
-		"babel-loader": "^6.3.2",
+		"babel-loader": "^7.1.1",
 		"babel-plugin-react-transform": "^2.0.2",
 		"babel-preset-es2015": "^6.22.0",
 		"babel-preset-react": "^6.23.0",
 		"babel-preset-stage-0": "^6.22.0",
-		"css-loader": "^0.26.1",
-		"eslint": "^3.16.1",
+		"css-loader": "^0.28.4",
+		"eslint": "^4.2.0",
 		"eslint-plugin-babel": "^4.0.1",
-		"eslint-plugin-react": "^6.10.0",
+		"eslint-plugin-react": "^7.1.0",
 		"react-transform-catch-errors": "^1.0.2",
 		"react-transform-hmr": "^1.0.4",
 		"redbox-react": "^1.3.4",
 		"rimraf": "^2.6.0",
-		"style-loader": "^0.13.1",
-		"webpack": "^2.2.1"
+		"style-loader": "^0.18.2",
+		"webpack": "^3.1.0"
 	},
 	"dependencies": {
 		"classnames": "^2.2.5",
-		"react": "^15.4.2",
-		"react-dom": "^15.4.2"
+		"react": "^15.6.1",
+		"react-dom": "^15.6.1"
 	},
 	"keywords": [
 		"react",

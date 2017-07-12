@@ -25,6 +25,10 @@
 	color: #1e2329;
 }
 
+.react-calendar__day--hide {
+	opacity: 0;
+}
+
 .react-calendar__arrow {
 	width: 44px;
 	text-align: center;
@@ -115,7 +119,8 @@
 	color: #fff !important;
 }
 
-.react-calendar__day--othermonth span {
+.react-calendar__day--prevmonth span,
+.react-calendar__day--nextmonth span {
 	border-radius: 50%;
 	color: #ccc;
 }

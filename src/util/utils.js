@@ -1,5 +1,10 @@
 const DAY = 24 * 60 * 60 * 1000;
 
+export const getDaysCountOfMonth = function (year, month) {
+  const d = new Date(year, month, 0);
+  return d.getDate();
+}
+
 export const getWeekNumber = function(date, dowOffset = 0) {
   var newYear = new Date(date.getFullYear(), 0, 1);
   var day = newYear.getDay() - dowOffset; //the day of week the year begins on

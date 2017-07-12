@@ -2,13 +2,13 @@
   "name": "react-calendar-mobile-example",
   "version": "0.1.0",
   "devDependencies": {
-    "react-scripts": "0.9.0"
+    "react-scripts": "^1.0.10"
   },
   "homepage": "http://jessemao.github.io/react-calendar-mobile",
   "dependencies": {
-    "react-calendar-mobile": "^0.1.0",
     "classnames": "^2.2.5",
     "react": "^15.4.2",
+    "react-calendar-mobile": "^0.1.0",
     "react-dom": "^15.4.2"
   },
   "scripts": {
